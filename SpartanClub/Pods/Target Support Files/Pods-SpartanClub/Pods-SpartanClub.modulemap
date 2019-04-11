@@ -1,0 +1,6 @@
+framework module Pods_SpartanClub {
+  umbrella header "Pods-SpartanClub-umbrella.h"
+
+  export *
+  module * { export * }
+}
