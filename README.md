@@ -4,3 +4,5 @@ This is repository for CMPE 131 project
 Download the latest version of Xcode to view this file
 # Open the file
 Open the file with extension workspace
+# Simulation
+Use iphone 7 version for simulator
