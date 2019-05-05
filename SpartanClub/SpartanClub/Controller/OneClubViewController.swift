@@ -10,8 +10,6 @@ import UIKit
 import Firebase
 import EventKit
 class OneClubViewController: UIViewController, UITableViewDelegate , UITableViewDataSource{
-
- 
     @IBOutlet var messageTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()

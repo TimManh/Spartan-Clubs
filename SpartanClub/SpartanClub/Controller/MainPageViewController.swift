@@ -9,6 +9,18 @@
 import UIKit
 import Firebase
 class MainPageViewController: UIViewController {
+    
+    let clubNameArr = ["Akbayan", "Key Club", "VSA", "American Association of Airport Executives", "Society of Women Engineers", "American Society of Civil Engineers","Active minds SJSU", "Advancement Institute for Management","AICHE","AIESEC","ALMAS","ASCE","SCE"]
+    
+    var searchClub = [String]()
+    var searching = false
+    
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tblView: UITableView!
+    
+    //    let clubs = ["AIESEC","ALMAS","BSU","BRAVEN","SCE","CRU"]
+
     var textPassedOver : String?
     
     override func viewDidLoad() {
@@ -16,6 +28,7 @@ class MainPageViewController: UIViewController {
         
     }
     
+
     @IBAction func logOut(_ sender: UIButton) {
         do{
             try FIRAuth.auth()?.signOut()}
@@ -44,3 +57,38 @@ class MainPageViewController: UIViewController {
     */
 
 }
+extension MainPageViewController: UITableViewDataSource,UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searching {
+            return searchClub.count
+        }else {
+            return clubNameArr.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        if searching {
+            cell?.textLabel?.text = searchClub[indexPath.row]
+        }else {
+            cell?.textLabel?.text = clubNameArr[indexPath.row]
+        }
+        return cell!
+    }
+}
+
+extension MainPageViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchClub = clubNameArr.filter({$0.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        searching = true
+        tblView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
+        tblView.reloadData()
+    }
+}
+
+
